@@ -1,7 +1,10 @@
 package com.demo.clientapplication.socket
 
+import java.io.BufferedReader
+import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.IOException
+import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.net.Socket
 
@@ -23,6 +26,15 @@ class SocketServer {
                 var serverOutput: DataOutputStream
                 val server = ServerSocket(SERVER_PORT)
 
+                // Data input
+                clientConn = server.accept()
+                val serverInput = DataInputStream(clientConn.getInputStream())
+                val br = BufferedReader(InputStreamReader(serverInput))
+                val readData = br.readLine()
+                println(readData)
+                clientConn.close()
+
+                // Data output
                 while (true) {
                     clientConn = server.accept()
                     serverOutput = DataOutputStream(clientConn.getOutputStream())
