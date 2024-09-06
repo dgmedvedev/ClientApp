@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ClientApp</string>
-    <string name="send_request">Send a request</string>
+    <string name="tcp_request">TCP request</string>
+    <string name="http_request">HTTP request</string>
 </resources>

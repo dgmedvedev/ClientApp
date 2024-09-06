@@ -28,17 +28,22 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        bindViewModel()
+        setListeners()
+    }
 
-        observeViewModel()
-
-        binding.buttonSendRequest.setOnClickListener {
-            viewModel.serverConnect()
+    private fun bindViewModel() {
+        viewModel.response.observe(this) {
+            binding.textView.text = it
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.response.observe(this) {
-            binding.textView.text = it
+    private fun setListeners() {
+        binding.httpRequestButton.setOnClickListener {
+            viewModel.onHttpRequestButtonPressed()
+        }
+        binding.tcpRequestButton.setOnClickListener {
+            viewModel.onTcpRequestButtonPressed()
         }
     }
 }

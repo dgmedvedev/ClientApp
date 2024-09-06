@@ -54,6 +54,16 @@ dependencies {
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.converter.gson)
 
+//    implementation(libs.ktor.server.core)
+//    implementation(libs.ktor.server.netty)
+//    implementation(libs.ktor.server.call.logging)
+//    implementation(libs.ktor.server.default.headers)
+//    implementation(libs.ktor.server.content.negotiation)
+//    testImplementation(libs.ktor.client.mock.jvm)
+//    //Terminal Logs for working with the HTTP-server and Ktor library
+//    implementation(libs.slf4j.simple)
+//    //or implementation("ch.qos.logback", "logback-classic", logbackVersion)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
