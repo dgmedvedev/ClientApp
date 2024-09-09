@@ -39,8 +39,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.httpRequestButton.setOnClickListener {
+        binding.okHttpRequestButton.setOnClickListener {
             viewModel.onHttpRequestButtonPressed()
+        }
+        binding.retrofitGetJsonButton.setOnClickListener {
+            viewModel.onRetrofitGetJsonButtonPressed()
+        }
+        binding.retrofitGetStringButton.setOnClickListener {
+            viewModel.onRetrofitGetStringButtonPressed()
         }
         binding.tcpRequestButton.setOnClickListener {
             viewModel.onTcpRequestButtonPressed()

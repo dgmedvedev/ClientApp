@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.demo.clientapplication.data.ApiFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,6 +26,32 @@ class MainViewModel : ViewModel() {
         connectToServer()
     }
 
+    fun onRetrofitGetJsonButtonPressed() {
+        viewModelScope.launch {
+            try {
+                val json = ApiFactory.getInstanceApiService().getJson()
+                _response.value = json.toString()
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+                _response.value =
+                    "HTTP sending error. The server is unavailable\nIOException: ${ioe.message}"
+            }
+        }
+    }
+
+    fun onRetrofitGetStringButtonPressed() {
+        viewModelScope.launch {
+            try {
+                val str = ApiFactory.getInstanceApiService().getString()
+                _response.value = str
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+                _response.value =
+                    "HTTP sending error. The server is unavailable\nIOException: ${ioe.message}"
+            }
+        }
+    }
+
     fun onHttpRequestButtonPressed() {
         viewModelScope.launch {
             var connection: HttpURLConnection? = null
@@ -34,7 +61,7 @@ class MainViewModel : ViewModel() {
                     connection = url.openConnection() as HttpURLConnection
                     connection?.requestMethod = REQUEST_GET
                     connection?.connectTimeout = CONNECTION_TIMEOUT
-                    connection?.setRequestProperty("Content-Type", "application/json")
+                    //connection?.setRequestProperty("Content-Type", "application/json")
 
                     val inputStream = connection?.inputStream
                     val reader = BufferedReader(InputStreamReader(inputStream))
@@ -76,8 +103,8 @@ class MainViewModel : ViewModel() {
             val socketAddress = InetSocketAddress(SERVER_HOST, SERVER_TCP_PORT)
             clientSocket.connect(socketAddress, CONNECTION_TIMEOUT)
             val inputStream = clientSocket.getInputStream()
-            val br = BufferedReader(InputStreamReader(inputStream))
-            val receivedData = br.readLine()
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            val receivedData = reader.readLine()
             receivedData
         }
     }
@@ -108,8 +135,8 @@ class MainViewModel : ViewModel() {
     companion object {
         private const val CONNECTION_TIMEOUT = 1000
         private const val REQUEST_GET = "GET"
-        private const val SERVER_HOST = "172.16.16.32"
-        private const val SERVER_HTTP_PORT = 1111
+        const val SERVER_HOST = "172.16.16.32"
+        const val SERVER_HTTP_PORT = 1111
         private const val SERVER_TCP_PORT = 3333
         private const val SERVER_URL = "http://$SERVER_HOST:$SERVER_HTTP_PORT/todo"
     }

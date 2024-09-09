@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ClientApp</string>
     <string name="tcp_request">TCP request</string>
-    <string name="http_request">HTTP request</string>
+    <string name="ok_http_request">OkHttp request</string>
+    <string name="retrofit_get_json_request">Retrofit (getJson)</string>
+    <string name="retrofit_get_string_request">Retrofit (getString)</string>
 </resources>
