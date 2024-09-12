@@ -2,8 +2,10 @@ package com.demo.clientapplication.data
 
 import com.demo.clientapplication.presentation.MainViewModel
 import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiFactory private constructor() {
 
@@ -23,9 +25,15 @@ class ApiFactory private constructor() {
                     .setLenient()
                     .create()
 
+                val okHttpClient = OkHttpClient.Builder()
+                    .readTimeout(3, TimeUnit.SECONDS)
+                    .connectTimeout(1, TimeUnit.SECONDS)
+                    .build()
+
                 val retrofit = Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(okHttpClient)
                     .build()
 
                 val apiService = retrofit.create(ApiService::class.java)
